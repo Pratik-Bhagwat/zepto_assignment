@@ -31,7 +31,11 @@ export const UserListItem = ({
   return (
     <li
       onClick={handleClick}
-      ref={(el) => (listElementsRef.current[index] = el)}
+      ref={(el) => {
+        if (listElementsRef.current) {
+          listElementsRef.current[index] = el!;
+        }
+      }}
       className={`flex items-center p-2 hover:cursor-pointer hover:bg-slate-200/45 ${
         cursor === index ? "bg-slate-200/45" : ""
       }`}

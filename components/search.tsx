@@ -24,7 +24,7 @@ export const Search = () => {
   const searchResults = useUserSearch(allUsers, debouncedValue);
 
   const [isInputFocused, setIsInputFocused] = useState<boolean>(false);
-  const wrapperRef = useRef(null);
+  const wrapperRef = useRef<HTMLDivElement | null>(null);
 
   const [cursor, setCursor] = useState(0);
   const listElementsRef = useRef<HTMLLIElement[] | null>([]);
@@ -32,7 +32,10 @@ export const Search = () => {
   const [isFirstFocus, setIsFirstFocus] = useState(true);
 
   const handleClickOutside = (event: MouseEvent) => {
-    if (wrapperRef.current && !wrapperRef.current.contains(event.target)) {
+    if (
+      wrapperRef.current &&
+      !wrapperRef.current.contains(event.target as Node)
+    ) {
       setIsInputFocused(false);
     }
   };
@@ -78,7 +81,7 @@ export const Search = () => {
   }
 
   useEffect(() => {
-    if (listElementsRef.current[cursor]) {
+    if (listElementsRef.current && listElementsRef.current[cursor]) {
       listElementsRef.current[cursor].scrollIntoView({
         behavior: "smooth",
         block: "nearest",
